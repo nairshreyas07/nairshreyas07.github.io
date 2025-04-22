@@ -4,134 +4,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shreyas Santosh Nair | Portfolio</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
-      width: 100%;
-      height: 100%;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
       font-family: 'Lato', sans-serif;
       background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+      color: white;
+    }
+    body {
       overflow-x: hidden;
     }
-
+    section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+    }
+    .hero {
+      position: relative;
+      text-align: center;
+      background: #0b0c10;
+    }
+    #title span {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 300;
+      background: linear-gradient(to right, #ffffff, #6dd5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 4px;
+    }
     #stars, #stars2, #stars3 {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-    }
-
-    #stars {
-      background: transparent;
-      box-shadow: 1000px 1000px #FFF;
-      animation: animStar 50s linear infinite;
-    }
-
-    #stars2 {
-      background: transparent;
-      box-shadow: 2000px 2000px #FFF;
+      z-index: -1;
+      background-repeat: repeat;
       animation: animStar 100s linear infinite;
     }
-
-    #stars3 {
-      background: transparent;
-      box-shadow: 3000px 3000px #FFF;
-      animation: animStar 150s linear infinite;
-    }
-
     @keyframes animStar {
-      from {
-        transform: translateY(0px);
-      }
-      to {
-        transform: translateY(-2000px);
-      }
+      from { transform: translateY(0); }
+      to { transform: translateY(-2000px); }
     }
-
-    #title {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 48px;
-      color: white;
-      letter-spacing: 8px;
-      font-weight: 300;
-      transform: translateY(-50%);
-    }
-
-    #title span {
-      background: linear-gradient(to bottom, white, #38495a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .glass-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
     .glass-box {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      padding: 25px 30px;
-      color: #fff;
-      font-family: sans-serif;
-      pointer-events: auto;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      max-width: 80%;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 16px;
+      padding: 30px;
+      width: 100%;
+      max-width: 800px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
     }
-
-    .projects ul {
-      list-style: none;
-      padding: 0;
+    .glass-box h2 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
     }
-
-    .projects li {
-      padding: 10px 0;
+    .glass-box ul li {
+      margin-bottom: 15px;
+      line-height: 1.5;
     }
-
-    .card {
-      width: 300px;
-      height: 180px;
-      margin: 40px auto;
-      position: relative;
+    .contact .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 15px;
-      overflow: hidden;
-      background: #1a1a1a;
-      color: white;
-      font-family: sans-serif;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
     }
-
-    .card .personal-intro,
-    .card .personal-info {
-      padding: 20px;
-    }
-
-    .card a {
-      color: #00aaff;
+    .contact a {
+      color: #6dd5fa;
       text-decoration: none;
     }
+    footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      background: #0e0e0e;
+    }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
 </head>
 <body>
 
@@ -141,52 +103,45 @@
     <div id="stars2"></div>
     <div id="stars3"></div>
     <div id="title">
-      <span>SHREYAS NAIR</span><br>
+      <span>SHREYAS NAIR</span>
       <span>EXPLORING BUSINESS & TECH</span>
     </div>
   </section>
 
-  <!-- ABOUT ME SECTION -->
+  <!-- ABOUT SECTION -->
   <section class="about">
-    <div class="glass-container">
-      <div class="glass-box">
-        <p>Hi! I’m Shreyas Santosh Nair, a 23-year-old curious mind blending technology with management. Currently pursuing an MBA at NMIMS Mumbai, with a BTech background from VIT Chennai. I enjoy building ideas, solving problems, and sometimes just jamming on my guitar 🎸.</p>
-      </div>
+    <div class="glass-box">
+      <p>
+        Hi! I’m Shreyas Santosh Nair, a 23-year-old curious mind blending technology with management. Currently pursuing an MBA at NMIMS Mumbai, with a BTech background from VIT Chennai. I enjoy building ideas, solving problems, and sometimes just jamming on my guitar 🎸.
+      </p>
     </div>
   </section>
 
   <!-- PROJECTS SECTION -->
   <section class="projects">
-    <div class="glass-container">
-      <div class="glass-box">
-        <h2>Projects</h2>
-        <ul>
-          <li><strong>Financial Statement Analysis:</strong> Analyzed NSE 500 firms using ratios and ESG metrics.</li>
-          <li><strong>Car Price Modelling:</strong> Built regression + ANOVA models to predict pricing factors.</li>
-          <li><strong>Blockchain in Healthcare:</strong> A federated learning model for data privacy & security.</li>
-        </ul>
-      </div>
+    <div class="glass-box">
+      <h2>Projects</h2>
+      <ul>
+        <li><strong>Financial Statement Analysis:</strong> Analyzed NSE 500 firms using ratios and ESG metrics.</li>
+        <li><strong>Car Price Modelling:</strong> Built regression + ANOVA models to predict pricing factors.</li>
+        <li><strong>Blockchain in Healthcare:</strong> A federated learning model for data privacy & security.</li>
+      </ul>
     </div>
   </section>
 
   <!-- CONTACT SECTION -->
   <section class="contact">
-    <div class="card front">
-      <div class="personal-intro">
-        <p>Shreyas Nair</p>
-        <p>Explorer | Builder | Learner</p>
-      </div>
-    </div>
-    <div class="card back">
-      <div class="personal-info">
-        <p>Shreyas Santosh Nair</p>
-        <p>shreyas.nair072@nmims.in</p>
-        <p>Mumbai, India</p>
-        <p><a href="https://www.linkedin.com/in/YOUR-LINK" target="_blank">LinkedIn</a></p>
-        <p><a href="resume.pdf" target="_blank">Download Resume</a></p>
-      </div>
+    <div class="card">
+      <p><strong>Shreyas Santosh Nair</strong></p>
+      <p>shreyas.nair072@nmims.in</p>
+      <p><a href="https://www.linkedin.com/in/YOUR-LINK" target="_blank">LinkedIn</a></p>
+      <p><a href="resume.pdf" target="_blank">Download Resume</a></p>
     </div>
   </section>
+
+  <footer>
+    Made with 🧠 & ❤️ — Shreyas Nair © 2025
+  </footer>
 
 </body>
 </html>
