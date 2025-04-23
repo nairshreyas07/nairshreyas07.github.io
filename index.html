@@ -11,7 +11,6 @@
       height: 100%;
       font-family: 'Lato', sans-serif;
       overflow-x: hidden;
-      scroll-behavior: smooth;
     }
     header {
       position: fixed;
@@ -27,7 +26,7 @@
       z-index: 10;
     }
     .logo-img {
-      height: 160px;
+      height: 70px;
     }
     nav a {
       color: #d1e9e9;
@@ -39,17 +38,14 @@
     nav a:hover {
       color: #f7c873;
     }
-    section {
+    .hero-section {
       width: 100vw;
       height: 100vh;
-    }
-    .hero-section {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      background: black;
     }
     #shader {
       position: absolute;
@@ -87,67 +83,6 @@
       margin-bottom: 20px;
       border: 3px solid #f7c873;
     }
-    .about-section {
-      position: relative;
-      background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #d1e9e9;
-      padding: 80px 20px;
-      overflow: hidden;
-    }
-    .about-section #stars, #stars2, #stars3 {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-    }
-    .about-box {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(12px);
-      padding: 40px;
-      border-radius: 12px;
-      max-width: 800px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-      z-index: 1;
-    }
-    .about-box h2 {
-      color: #f7c873;
-      margin-bottom: 20px;
-    }
-    .about-box p {
-      line-height: 1.6;
-    }
-    #stars, #stars2, #stars3 {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: transparent;
-      content: '';
-    }
-    #stars {
-      width: 1px; height: 1px;
-      box-shadow: 1000px 1000px #FFF;
-      animation: animStar 50s linear infinite;
-    }
-    #stars2 {
-      width: 2px; height: 2px;
-      box-shadow: 1000px 1000px #FFF;
-      animation: animStar 100s linear infinite;
-    }
-    #stars3 {
-      width: 3px; height: 3px;
-      box-shadow: 1000px 1000px #FFF;
-      animation: animStar 150s linear infinite;
-    }
-    @keyframes animStar {
-      from { transform: translateY(0px); }
-      to { transform: translateY(-2000px); }
-    }
   </style>
 </head>
 <body>
@@ -165,131 +100,122 @@
     <div class="intro-content">
       <img src="ShreyasProfile.png" alt="Shreyas Nair" class="profile-pic">
       <h2>Hi, I'm Shreyas</h2>
-      <p>Doing MBA from NMIMS | Gamer | Guitar Jammer</p>
+      <p>MBA Candidate, NMIMS Mumbai '26 | Occasional Gamer | Music Enthusiast</p>
     </div>
   </section>
 
-  <section id="about" class="about-section">
-    <div id="stars"></div>
-    <div id="stars2"></div>
-    <div id="stars3"></div>
-    <div class="about-box">
-      <h2>About Me</h2>
-      <p>
-        I'm Shreyas Santosh Nair, a 23-year-old MBA candidate at NMIMS Mumbai with a B.Tech from VIT Chennai. I’m passionate about general management, design, and tech. Beyond academics, you’ll find me gaming, strumming my guitar, or exploring creative projects.
-      </p>
-    </div>
-  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
   <script id="vertex" type="x-shader/x-vertex">
-  varying vec2 vUv;
-  void main() {
-    gl_Position = vec4(position, 1.0);
-    vUv = uv;
-  }
-</script>
+    varying vec2 vUv;
+    void main() {
+      gl_Position = vec4(position, 1.0);
+      vUv = uv;
+    }
+  </script>
 
-<script id="fragment" type="x-shader/x-fragment">
-  precision highp float;
-  uniform vec2 u_resolution;
-  uniform float u_time;
-  varying vec2 vUv;
+  <script id="fragment" type="x-shader/x-fragment">
+    precision highp float;
+    uniform vec2 u_resolution;
+    uniform float u_time;
+    varying vec2 vUv;
 
-  const float PI = 3.1415926535897932384626433832795;
+    float hash(vec2 p) {
+      return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+    }
 
-  void coswarp(inout vec3 trip, float warpsScale) {
-    trip.xyz += warpsScale * .1 * cos(3. * trip.yzx + (u_time * .25));
-    trip.xyz += warpsScale * .05 * cos(11. * trip.yzx + (u_time * .25));
-    trip.xyz += warpsScale * .025 * cos(17. * trip.yzx + (u_time * .25));
-  }
+    float noise(in vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
 
-  float cnoise(vec2 P) {
-    vec2 i = floor(P);
-    vec2 f = fract(P);
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    return mix(mix(dot(random2(i + vec2(0.0, 0.0)), f - vec2(0.0, 0.0)),
-                   dot(random2(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0)), u.x),
-               mix(dot(random2(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0)),
-                   dot(random2(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0)), u.x), u.y);
-  }
+      float a = hash(i);
+      float b = hash(i + vec2(1.0, 0.0));
+      float c = hash(i + vec2(0.0, 1.0));
+      float d = hash(i + vec2(1.0, 1.0));
 
-  vec2 random2(vec2 p) {
-    return fract(sin(vec2(dot(p, vec2(127.1, 311.7)),
-                          dot(p, vec2(269.5, 183.3)))) * 43758.5453);
-  }
+      vec2 u = f * f * (3.0 - 2.0 * f);
 
-  void main() {
-    vec2 uv = (gl_FragCoord.xy - u_resolution * .5) / u_resolution.yy + 0.5;
-    vec3 warpC = vec3(uv.x, uv.y, 1.);
-    coswarp(warpC, 3.);
+      return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+    }
 
-    float t = (u_time *.2) + warpC.r;
+    void coswarp(inout vec3 trip, float warpsScale) {
+      trip.xyz += warpsScale * .1 * cos(3. * trip.yzx + (u_time * .25));
+      trip.xyz += warpsScale * .05 * cos(11. * trip.yzx + (u_time * .25));
+      trip.xyz += warpsScale * .025 * cos(17. * trip.yzx + (u_time * .25));
+    }
 
-    vec3 color = vec3(
-      smoothstep(sin(t), .00001, cnoise(uv * (3. + (warpC.r * 3.)))),
-      smoothstep(cos(t * .8), .00001, cnoise(uv * (3. + (warpC.g * 3.)))),
-      smoothstep(tan(t), .00001, cnoise(uv * (3. + (warpC.b * 3.))))
-    );
+    void main() {
+      vec2 uv = (gl_FragCoord.xy - u_resolution * .5) / u_resolution.yy + 0.5;
+      vec3 warpC = vec3(uv.x, uv.y, 1.);
+      coswarp(warpC, 3.);
+      float t = (u_time * .2) + warpC.r;
 
-    coswarp(color, 3.);
-    gl_FragColor = vec4(color, 1.0);
-  }
-</script>
+      vec3 color = vec3(
+        smoothstep(sin(t), .00001, noise(uv * (3. + (warpC.r * 3.)))),
+        smoothstep(cos(t * .8), .00001, noise(uv * (3. + (warpC.g * 3.)))),
+        smoothstep(tan(t), .00001, noise(uv * (3. + (warpC.b * 3.))))
+      );
+      coswarp(color, 3.);
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-  let camera, scene, renderer, clock;
-  let uniforms;
+      color = mix(color, vec3(0.1, 0.5, 0.55), 0.5);
+      gl_FragColor = vec4(color, 1.0);
+    }
+  </script>
 
-  function init() {
-    const container = document.getElementById("shader");
+  <script>
+    let camera, scene, renderer, clock;
+    let uniforms;
 
-    clock = new THREE.Clock();
-    camera = new THREE.Camera();
-    camera.position.z = 1;
+    function init() {
+      const container = document.getElementById("shader");
 
-    scene = new THREE.Scene();
-    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+      clock = new THREE.Clock();
+      camera = new THREE.Camera();
+      camera.position.z = 1;
 
-    uniforms = {
-      u_time: { type: "f", value: 1.0 },
-      u_resolution: { type: "v2", value: new THREE.Vector2() }
-    };
+      scene = new THREE.Scene();
+      const geometry = new THREE.PlaneBufferGeometry(2, 2);
 
-    const material = new THREE.ShaderMaterial({
-      uniforms,
-      vertexShader: document.getElementById("vertex").textContent,
-      fragmentShader: document.getElementById("fragment").textContent
-    });
+      uniforms = {
+        u_time: { type: "f", value: 1.0 },
+        u_resolution: { type: "v2", value: new THREE.Vector2() },
+      };
 
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+      const material = new THREE.ShaderMaterial({
+        uniforms,
+        vertexShader: document.getElementById("vertex").textContent,
+        fragmentShader: document.getElementById("fragment").textContent,
+      });
 
-    renderer = new THREE.WebGLRenderer();
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
 
-    onWindowResize();
-    window.addEventListener("resize", onWindowResize);
-  }
+      renderer = new THREE.WebGLRenderer();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      container.appendChild(renderer.domElement);
 
-  function onWindowResize() {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    uniforms.u_resolution.value.x = renderer.domElement.width;
-    uniforms.u_resolution.value.y = renderer.domElement.height;
-  }
+      onWindowResize();
+      window.addEventListener("resize", onWindowResize);
+    }
 
-  function render() {
-    uniforms.u_time.value = clock.getElapsedTime();
-    renderer.render(scene, camera);
-  }
+    function onWindowResize() {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      uniforms.u_resolution.value.x = renderer.domElement.width;
+      uniforms.u_resolution.value.y = renderer.domElement.height;
+    }
 
-  function animate() {
-    render();
-    requestAnimationFrame(animate);
-  }
+    function render() {
+      uniforms.u_time.value = clock.getElapsedTime();
+      renderer.render(scene, camera);
+    }
 
-  init();
-  animate();
-</script>
+    function animate() {
+      render();
+      requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+  </script>
 </body>
 </html>
