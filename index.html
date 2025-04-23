@@ -180,5 +180,116 @@
       </p>
     </div>
   </section>
+  <script id="vertex" type="x-shader/x-vertex">
+  varying vec2 vUv;
+  void main() {
+    gl_Position = vec4(position, 1.0);
+    vUv = uv;
+  }
+</script>
+
+<script id="fragment" type="x-shader/x-fragment">
+  precision highp float;
+  uniform vec2 u_resolution;
+  uniform float u_time;
+  varying vec2 vUv;
+
+  const float PI = 3.1415926535897932384626433832795;
+
+  void coswarp(inout vec3 trip, float warpsScale) {
+    trip.xyz += warpsScale * .1 * cos(3. * trip.yzx + (u_time * .25));
+    trip.xyz += warpsScale * .05 * cos(11. * trip.yzx + (u_time * .25));
+    trip.xyz += warpsScale * .025 * cos(17. * trip.yzx + (u_time * .25));
+  }
+
+  float cnoise(vec2 P) {
+    vec2 i = floor(P);
+    vec2 f = fract(P);
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(mix(dot(random2(i + vec2(0.0, 0.0)), f - vec2(0.0, 0.0)),
+                   dot(random2(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0)), u.x),
+               mix(dot(random2(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0)),
+                   dot(random2(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0)), u.x), u.y);
+  }
+
+  vec2 random2(vec2 p) {
+    return fract(sin(vec2(dot(p, vec2(127.1, 311.7)),
+                          dot(p, vec2(269.5, 183.3)))) * 43758.5453);
+  }
+
+  void main() {
+    vec2 uv = (gl_FragCoord.xy - u_resolution * .5) / u_resolution.yy + 0.5;
+    vec3 warpC = vec3(uv.x, uv.y, 1.);
+    coswarp(warpC, 3.);
+
+    float t = (u_time *.2) + warpC.r;
+
+    vec3 color = vec3(
+      smoothstep(sin(t), .00001, cnoise(uv * (3. + (warpC.r * 3.)))),
+      smoothstep(cos(t * .8), .00001, cnoise(uv * (3. + (warpC.g * 3.)))),
+      smoothstep(tan(t), .00001, cnoise(uv * (3. + (warpC.b * 3.))))
+    );
+
+    coswarp(color, 3.);
+    gl_FragColor = vec4(color, 1.0);
+  }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  let camera, scene, renderer, clock;
+  let uniforms;
+
+  function init() {
+    const container = document.getElementById("shader");
+
+    clock = new THREE.Clock();
+    camera = new THREE.Camera();
+    camera.position.z = 1;
+
+    scene = new THREE.Scene();
+    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+    uniforms = {
+      u_time: { type: "f", value: 1.0 },
+      u_resolution: { type: "v2", value: new THREE.Vector2() }
+    };
+
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader: document.getElementById("vertex").textContent,
+      fragmentShader: document.getElementById("fragment").textContent
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    renderer = new THREE.WebGLRenderer();
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    onWindowResize();
+    window.addEventListener("resize", onWindowResize);
+  }
+
+  function onWindowResize() {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    uniforms.u_resolution.value.x = renderer.domElement.width;
+    uniforms.u_resolution.value.y = renderer.domElement.height;
+  }
+
+  function render() {
+    uniforms.u_time.value = clock.getElapsedTime();
+    renderer.render(scene, camera);
+  }
+
+  function animate() {
+    render();
+    requestAnimationFrame(animate);
+  }
+
+  init();
+  animate();
+</script>
 </body>
 </html>
