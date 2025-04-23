@@ -83,6 +83,28 @@
       margin-bottom: 20px;
       border: 3px solid #f7c873;
     }
+    .cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f7c873;
+  box-shadow: 0 0 15px #f7c873, 0 0 30px #f7c873;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0.8;
+  animation: fadeOut 1s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
   </style>
 </head>
 <body>
@@ -570,5 +592,18 @@
     init();
     animate();
   </script>
+  <script>
+  document.addEventListener('mousemove', (e) => {
+    const trail = document.createElement('div');
+    trail.classList.add('cursor-trail');
+    trail.style.left = `${e.clientX}px`;
+    trail.style.top = `${e.clientY}px`;
+    document.body.appendChild(trail);
+    
+    setTimeout(() => {
+      trail.remove();
+    }, 1000); // Match the fadeOut animation duration
+  });
+</script>
 </body>
 </html>
