@@ -217,11 +217,13 @@
           <div class="project-links">
             <a href="#" aria-label="View Details"><i class="fas fa-users"></i></a>
           </div>
+          <div id="neon-cursor"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
+  
 
 <!-- Add this CSS to your existing style section -->
 <style>
@@ -515,60 +517,71 @@
     }
   </script>
 
-  <script>
-    let camera, scene, renderer, clock;
-    let uniforms;
+ <script type="module">
+  // 1. Import the neon cursor (must use type="module")
+  import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js';
 
-    function init() {
-      const container = document.getElementById("shader");
+  // 2. Initialize neon cursor (will appear above everything)
+  neonCursor({
+    el: document.getElementById('neon-cursor'), // Targets the div we added
+    shaderPoints: 12,       // Number of trailing lights
+    radius1: 5,             // Inner glow radius
+    radius2: 20,            // Outer glow radius
+    velocityTreshold: 1,    // How fast the cursor moves
+    sleepRadiusX: 50,       // Horizontal sleep distance
+    sleepRadiusY: 50        // Vertical sleep distance
+  });
 
-      clock = new THREE.Clock();
-      camera = new THREE.Camera();
-      camera.position.z = 1;
+  // 3. Your original Three.js background shader (unchanged)
+  let camera, scene, renderer, clock;
+  let uniforms;
 
-      scene = new THREE.Scene();
-      const geometry = new THREE.PlaneBufferGeometry(2, 2);
+  function init() {
+    const container = document.getElementById("shader");
+    clock = new THREE.Clock();
+    camera = new THREE.Camera();
+    camera.position.z = 1;
+    scene = new THREE.Scene();
+    const geometry = new THREE.PlaneBufferGeometry(2, 2);
 
-      uniforms = {
-        u_time: { type: "f", value: 1.0 },
-        u_resolution: { type: "v2", value: new THREE.Vector2() },
-      };
+    uniforms = {
+      u_time: { type: "f", value: 1.0 },
+      u_resolution: { type: "v2", value: new THREE.Vector2() },
+    };
 
-      const material = new THREE.ShaderMaterial({
-        uniforms,
-        vertexShader: document.getElementById("vertex").textContent,
-        fragmentShader: document.getElementById("fragment").textContent,
-      });
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader: document.getElementById("vertex").textContent,
+      fragmentShader: document.getElementById("fragment").textContent,
+    });
 
-      const mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    renderer = new THREE.WebGLRenderer();
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+    onWindowResize();
+    window.addEventListener("resize", onWindowResize);
+  }
 
-      renderer = new THREE.WebGLRenderer();
-      renderer.setPixelRatio(window.devicePixelRatio);
-      container.appendChild(renderer.domElement);
+  function onWindowResize() {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    uniforms.u_resolution.value.x = renderer.domElement.width;
+    uniforms.u_resolution.value.y = renderer.domElement.height;
+  }
 
-      onWindowResize();
-      window.addEventListener("resize", onWindowResize);
-    }
+  function render() {
+    uniforms.u_time.value = clock.getElapsedTime();
+    renderer.render(scene, camera);
+  }
 
-    function onWindowResize() {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      uniforms.u_resolution.value.x = renderer.domElement.width;
-      uniforms.u_resolution.value.y = renderer.domElement.height;
-    }
+  function animate() {
+    render();
+    requestAnimationFrame(animate);
+  }
 
-    function render() {
-      uniforms.u_time.value = clock.getElapsedTime();
-      renderer.render(scene, camera);
-    }
-
-    function animate() {
-      render();
-      requestAnimationFrame(animate);
-    }
-
-    init();
-    animate();
-  </script>
+  init();
+  animate();
+</script>
 </body>
 </html>
