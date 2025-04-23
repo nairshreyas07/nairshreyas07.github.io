@@ -11,7 +11,6 @@
       height: 100%;
       font-family: 'Lato', sans-serif;
       overflow-x: hidden;
-      background-color: #0a0f12;
     }
     header {
       position: fixed;
@@ -96,6 +95,7 @@
   </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
   <script id="vertex" type="x-shader/x-vertex">
     varying vec2 vUv;
     void main() {
@@ -109,16 +109,31 @@
     uniform vec2 u_resolution;
     uniform float u_time;
     varying vec2 vUv;
-    const float PI = 3.141592653589793;
+
+    const float PI = 3.1415926535897932384626433832795;
+    const float TAU = PI * 2.;
+
+    float cnoise(vec2 P);
+    void coswarp(inout vec3 trip, float warpsScale) {
+      trip.xyz += warpsScale * .1 * cos(3. * trip.yzx + (u_time * .25));
+      trip.xyz += warpsScale * .05 * cos(11. * trip.yzx + (u_time * .25));
+      trip.xyz += warpsScale * .025 * cos(17. * trip.yzx + (u_time * .25));
+    }
+
     void main() {
-      vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+      vec2 uv = (gl_FragCoord.xy - u_resolution * .5) / u_resolution.yy + 0.5;
+      vec3 warpC = vec3(uv.x, uv.y, 1.);
+      coswarp(warpC, 3.);
+      coswarp(warpC, 3.);
+
+      float t = (u_time * .2) + warpC.r;
       vec3 color = vec3(
-        0.0,
-        0.2 + 0.2 * sin(u_time + uv.x * 10.0),
-        0.2 + 0.2 * cos(u_time + uv.y * 10.0)
+        smoothstep(sin(t), .00001, cnoise(uv * (3. + (warpC.r * 3.)))),
+        smoothstep(cos(t * .8), .00001, cnoise(uv * (3. + (warpC.g * 3.)))),
+        smoothstep(tan(t), .00001, cnoise(uv * (3. + (warpC.b * 3.))))
       );
-      color.r = 0.9 * sin(u_time + uv.y * 4.0);
-      gl_FragColor = vec4(color * vec3(0.6, 0.85, 0.8), 1.0);
+      coswarp(color, 3.);
+      gl_FragColor = vec4(color, 1.0);
     }
   </script>
 
@@ -128,6 +143,7 @@
 
     function init() {
       const container = document.getElementById("shader");
+
       clock = new THREE.Clock();
       camera = new THREE.Camera();
       camera.position.z = 1;
