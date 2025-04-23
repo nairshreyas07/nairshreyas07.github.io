@@ -48,13 +48,74 @@ section {
       color: #f7c873;
     }
     .hero-section {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
+      /* Replace your current .hero-section styles with these */
+.hero-section {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 20px; /* Added for mobile safety */
+}
+
+.intro-content {
+  z-index: 1;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%; /* Changed from fixed width */
+  max-width: 800px; /* Added max-width */
+  margin: 0 auto; /* Center horizontally */
+}
+
+/* Responsive font sizes */
+.intro-content h2 {
+  font-size: clamp(2rem, 5vw, 3rem); /* Fluid typography */
+  color: #f7c873;
+}
+
+.intro-content p {
+  margin-top: 10px;
+  font-size: clamp(1rem, 2vw, 1.2rem); /* Fluid typography */
+  color: #d1e9e9;
+}
+
+.profile-pic {
+  width: clamp(100px, 25vw, 150px); /* Responsive image */
+  height: clamp(100px, 25vw, 150px);
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 3px solid #f7c873;
+}
+
+/* Mobile header adjustments */
+@media (max-width: 768px) {
+  header {
+    padding: 15px 20px;
+  }
+  
+  .logo-img {
+    height: 50px;
+  }
+  
+  nav a {
+    margin-left: 15px;
+    font-size: 0.9rem;
+  }
+  
+  /* Adjust section spacing for mobile */
+  section {
+    scroll-margin-top: 80px;
+  }
+}
     }
     #shader {
       position: absolute;
@@ -325,5 +386,29 @@ section {
     init();
     animate();
   </script>
+  <script>
+// Enhanced smooth scrolling for older browsers
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop - 100, // Adjust for header height
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// Make Three.js canvas responsive
+window.addEventListener('resize', function() {
+  if (renderer && camera) {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+});
+</script>
 </body>
 </html>
