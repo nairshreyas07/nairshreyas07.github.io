@@ -11,6 +11,7 @@
       height: 100%;
       font-family: 'Lato', sans-serif;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
     header {
       position: fixed;
@@ -26,7 +27,7 @@
       z-index: 10;
     }
     .logo-img {
-      height: 70px;
+      height: 90px;
     }
     nav a {
       color: #d1e9e9;
@@ -38,9 +39,11 @@
     nav a:hover {
       color: #f7c873;
     }
-    .hero-section {
+    section {
       width: 100vw;
       height: 100vh;
+    }
+    .hero-section {
       position: relative;
       display: flex;
       align-items: center;
@@ -83,11 +86,34 @@
       margin-bottom: 20px;
       border: 3px solid #f7c873;
     }
+    .about-section {
+      background: linear-gradient(to right, #0b2c2c, #042f40);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d1e9e9;
+      padding: 80px 20px;
+    }
+    .about-box {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      border-radius: 12px;
+      max-width: 800px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+    .about-box h2 {
+      color: #f7c873;
+      margin-bottom: 20px;
+    }
+    .about-box p {
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="N (1).jpg" alt="Shreyas Logo" class="logo-img">
+    <img src="logo.png" alt="Shreyas Logo" class="logo-img">
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
@@ -98,9 +124,18 @@
   <section class="hero-section">
     <div id="shader"></div>
     <div class="intro-content">
-      <img src="ShreyasProfile.png" alt="Shreyas Nair" class="profile-pic">
+      <img src="shreyas.jpg" alt="Shreyas Nair" class="profile-pic">
       <h2>Hi, I'm Shreyas</h2>
-      <p>MBA Candidate, NMIMS Mumbai '26 | Occasional Gamer | Music Enthusiast</p>
+      <p>Doing MBA from NMIMS | Gamer | Guitar Jammer</p>
+    </div>
+  </section>
+
+  <section id="about" class="about-section">
+    <div class="about-box">
+      <h2>About Me</h2>
+      <p>
+        I'm Shreyas Santosh Nair, a 23-year-old MBA candidate at NMIMS Mumbai with a B.Tech from VIT Chennai. I’m passionate about general management, design, and tech. Beyond academics, you’ll find me gaming, strumming my guitar, or exploring creative projects.
+      </p>
     </div>
   </section>
 
