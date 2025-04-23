@@ -88,21 +88,30 @@
   top: 0;
   left: 0;
   pointer-events: none;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #f7c873;
-  box-shadow: 0 0 15px #f7c873, 0 0 30px #f7c873;
+  width: 16px;
+  height: 16px;
   z-index: 9999;
-  transform: translate(-50%, -50%);
-  opacity: 0.8;
-  animation: fadeOut 1s ease-out forwards;
+  transform: translate(-50%, -50%) rotate(0deg);
+  opacity: 1;
+  animation: fadeTrail 1s ease-out forwards, spin 1s linear infinite;
+  background: transparent;
+  border-radius: 0;
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,0 61,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 39,35" fill="white"/></svg>');
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,0 61,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 39,35" fill="white"/></svg>');
+  background-color: #ff00ff;
+  box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
 }
 
-@keyframes fadeOut {
+@keyframes fadeTrail {
   to {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
+    transform: translate(-50%, -50%) scale(0.5) rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
   </style>
@@ -593,16 +602,23 @@
     animate();
   </script>
   <script>
+  const colors = ['#ff00ff', '#00ffff', '#f7c873', '#00ff00', '#ff0055'];
+  let colorIndex = 0;
+
   document.addEventListener('mousemove', (e) => {
     const trail = document.createElement('div');
     trail.classList.add('cursor-trail');
+    const currentColor = colors[colorIndex % colors.length];
+
     trail.style.left = `${e.clientX}px`;
     trail.style.top = `${e.clientY}px`;
+    trail.style.backgroundColor = currentColor;
+    trail.style.boxShadow = `0 0 10px ${currentColor}, 0 0 20px ${currentColor}`;
+
     document.body.appendChild(trail);
-    
-    setTimeout(() => {
-      trail.remove();
-    }, 1000); // Match the fadeOut animation duration
+    setTimeout(() => trail.remove(), 1000);
+
+    colorIndex++;
   });
 </script>
 </body>
