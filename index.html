@@ -7,15 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-html {
-  scroll-behavior: smooth;
-}
-html, body {
-  height: 100%;
-  font-family: 'Lato', sans-serif;
-  overflow-x: hidden;
-}
-
+    html, body {
+      height: 100%;
+      font-family: 'Lato', sans-serif;
+      overflow-x: hidden;
+    }
     header {
       position: fixed;
       top: 0;
@@ -320,5 +316,22 @@ html, body {
     init();
     animate();
   </script>
+  <script>
+  // Smooth scroll with offset for fixed header
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      const target = document.querySelector(this.getAttribute('href'));
+      const offset = 100; // Adjust this to match your header height
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: top,
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
 </body>
 </html>
