@@ -110,10 +110,24 @@
     uniform float u_time;
     varying vec2 vUv;
 
-    const float PI = 3.1415926535897932384626433832795;
-    const float TAU = PI * 2.;
+    float hash(vec2 p) {
+      return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+    }
 
-    float cnoise(vec2 P);
+    float noise(in vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+
+      float a = hash(i);
+      float b = hash(i + vec2(1.0, 0.0));
+      float c = hash(i + vec2(0.0, 1.0));
+      float d = hash(i + vec2(1.0, 1.0));
+
+      vec2 u = f * f * (3.0 - 2.0 * f);
+
+      return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+    }
+
     void coswarp(inout vec3 trip, float warpsScale) {
       trip.xyz += warpsScale * .1 * cos(3. * trip.yzx + (u_time * .25));
       trip.xyz += warpsScale * .05 * cos(11. * trip.yzx + (u_time * .25));
@@ -124,15 +138,17 @@
       vec2 uv = (gl_FragCoord.xy - u_resolution * .5) / u_resolution.yy + 0.5;
       vec3 warpC = vec3(uv.x, uv.y, 1.);
       coswarp(warpC, 3.);
-      coswarp(warpC, 3.);
-
       float t = (u_time * .2) + warpC.r;
+
       vec3 color = vec3(
-        smoothstep(sin(t), .00001, cnoise(uv * (3. + (warpC.r * 3.)))),
-        smoothstep(cos(t * .8), .00001, cnoise(uv * (3. + (warpC.g * 3.)))),
-        smoothstep(tan(t), .00001, cnoise(uv * (3. + (warpC.b * 3.))))
+        smoothstep(sin(t), .00001, noise(uv * (3. + (warpC.r * 3.)))),
+        smoothstep(cos(t * .8), .00001, noise(uv * (3. + (warpC.g * 3.)))),
+        smoothstep(tan(t), .00001, noise(uv * (3. + (warpC.b * 3.))))
       );
       coswarp(color, 3.);
+
+      // Apply dark teal & gold tint
+      color = mix(color, vec3(0.1, 0.5, 0.55), 0.5);
       gl_FragColor = vec4(color, 1.0);
     }
   </script>
