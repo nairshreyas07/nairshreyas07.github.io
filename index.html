@@ -463,8 +463,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let spaceX = (app.screen.width - app.screen.width / row) / row;
     let spaceY = (app.screen.height - app.screen.height / column) / column;
 
-    let element_width = Math.round(app.screen.width / 70);
-    let element_height = Math.round(app.screen.width / 70);
+    let element_width = Math.round(app.screen.width / 100);
+    let element_height = Math.round(app.screen.width / 100);
 
     let temp = 0;
     let x = 0;
@@ -523,7 +523,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let color = jsonData[frame][i];
 
       if (color === "b") element.tint = 0x000000;
-      else element.tint = "0x" + color;
+      else element.tint = parseInt(color, 16) | 0x202020; // boosts darker colors
     }
     frame++
   }
