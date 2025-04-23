@@ -1,221 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shreyas Nair | Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Your existing head content remains the same -->
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      font-family: 'Lato', sans-serif;
-      overflow-x: hidden;
-    }
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px);
+    /* Add these new styles after your existing ones */
+    
+    section {
+      padding: 100px 40px;
+      min-height: 100vh;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 20px 40px;
-      z-index: 10;
     }
-    .logo-img {
-      height: 70px;
+    
+    .section-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
     }
-    nav a {
+    
+    /* About Section */
+    #about {
+      background-color: #0a192f;
+      color: #d1e9e9;
+    }
+    
+    .about-container {
+      display: flex;
+      gap: 50px;
+      align-items: center;
+    }
+    
+    .about-text {
+      flex: 1;
+    }
+    
+    .about-image {
+      flex: 1;
+      text-align: center;
+    }
+    
+    .about-image img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    h2.section-title {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #f7c873;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2.section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60%;
+      height: 3px;
+      background-color: #f7c873;
+    }
+    
+    /* Projects Section */
+    #projects {
+      background-color: #112240;
+    }
+    
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+    
+    .project-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 25px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    }
+    
+    .project-card h3 {
+      color: #f7c873;
+      margin-bottom: 15px;
+    }
+    
+    .project-card p {
+      margin-bottom: 20px;
+    }
+    
+    .project-links a {
       color: #d1e9e9;
       text-decoration: none;
-      margin-left: 30px;
-      font-weight: 400;
+      margin-right: 15px;
       transition: color 0.3s;
     }
-    nav a:hover {
+    
+    .project-links a:hover {
       color: #f7c873;
     }
-    .hero-section {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-    }
-    #shader {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-    .intro-content {
-      z-index: 1;
+    
+    /* Contact Section */
+    #contact {
+      background-color: #0a192f;
       text-align: center;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 40px;
-      border-radius: 12px;
-      backdrop-filter: blur(6px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
-    .intro-content h2 {
-      font-size: 3rem;
+    
+    .contact-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+    
+    .contact-link {
+      color: #d1e9e9;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      transition: color 0.3s;
+    }
+    
+    .contact-link:hover {
       color: #f7c873;
     }
-    .intro-content p {
-      margin-top: 10px;
-      font-size: 1.2rem;
-      color: #d1e9e9;
+    
+    .contact-link i {
+      margin-right: 10px;
+      font-size: 1.5rem;
     }
-    .profile-pic {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 20px;
-      border: 3px solid #f7c873;
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .about-container {
+        flex-direction: column;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      header {
+        padding: 15px 20px;
+      }
+      
+      .logo-img {
+        height: 50px;
+      }
     }
   </style>
+  <!-- Add Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <header>
-    <img src="N (1).jpg" alt="Shreyas Logo" class="logo-img">
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <section class="hero-section">
-    <div id="shader"></div>
-    <div class="intro-content">
-      <img src="ShreyasProfile.png" alt="Shreyas Nair" class="profile-pic">
-      <h2>Hi, I'm Shreyas</h2>
-      <p>MBA Candidate, NMIMS Mumbai '26 | Occasional Gamer | Music Enthusiast</p>
+  <!-- Your existing header and hero section remain the same -->
+  
+  <!-- About Section -->
+  <section id="about">
+    <div class="section-content">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-container">
+        <div class="about-text">
+          <p>Hello! I'm Shreyas Nair, an MBA candidate at NMIMS Mumbai with a passion for business strategy and digital innovation.</p>
+          <p>My journey has been shaped by diverse experiences that blend analytical thinking with creative problem-solving. I believe in continuous learning and applying knowledge to create meaningful impact.</p>
+          <p>When I'm not immersed in case studies or business simulations, you can find me exploring new music genres, gaming, or diving into the latest tech trends.</p>
+          <p>I'm particularly interested in [your specific interests - e.g., "digital marketing strategies, consumer behavior analysis, and startup ecosystems"].</p>
+        </div>
+        <div class="about-image">
+          <img src="about-image.jpg" alt="Shreyas Nair about image">
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Projects Section -->
+  <section id="projects">
+    <div class="section-content">
+      <h2 class="section-title">My Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>Market Analysis Dashboard</h3>
+          <p>A comprehensive dashboard analyzing consumer trends in the FMCG sector, built with Tableau and Python.</p>
+          <div class="project-links">
+            <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+            <a href="#"><i class="fab fa-github"></i> View Code</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>Business Strategy Simulation</h3>
+          <p>Led a team to develop and implement a winning strategy in a competitive business simulation environment.</p>
+          <div class="project-links">
+            <a href="#"><i class="fas fa-file-pdf"></i> Case Study</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>Startup Pitch Deck</h3>
+          <p>Created an investor pitch for an innovative ed-tech solution targeting working professionals.</p>
+          <div class="project-links">
+            <a href="#"><i class="fas fa-file-powerpoint"></i> Slides</a>
+            <a href="#"><i class="fas fa-video"></i> Presentation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="section-content">
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="contact-content">
+        <p>I'm currently looking for new opportunities and would love to connect! Whether you have a question or just want to say hi, I'll do my best to get back to you.</p>
+        <div class="contact-links">
+          <a href="mailto:your.email@example.com" class="contact-link">
+            <i class="fas fa-envelope"></i> Email
+          </a>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="https://twitter.com/yourhandle" target="_blank" class="contact-link">
+            <i class="fab fa-twitter"></i> Twitter
+          </a>
+          <a href="https://github.com/yourusername" target="_blank" class="contact-link">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-  <script id="vertex" type="x-shader/x-vertex">
-    varying vec2 vUv;
-    void main() {
-      gl_Position = vec4(position, 1.0);
-      vUv = uv;
-    }
-  </script>
-
-  <script id="fragment" type="x-shader/x-fragment">
-    precision highp float;
-    uniform vec2 u_resolution;
-    uniform float u_time;
-    varying vec2 vUv;
-
-    float hash(vec2 p) {
-      return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
-    }
-
-    float noise(in vec2 p) {
-      vec2 i = floor(p);
-      vec2 f = fract(p);
-
-      float a = hash(i);
-      float b = hash(i + vec2(1.0, 0.0));
-      float c = hash(i + vec2(0.0, 1.0));
-      float d = hash(i + vec2(1.0, 1.0));
-
-      vec2 u = f * f * (3.0 - 2.0 * f);
-
-      return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-    }
-
-    void coswarp(inout vec3 trip, float warpsScale) {
-      trip.xyz += warpsScale * .1 * cos(3. * trip.yzx + (u_time * .25));
-      trip.xyz += warpsScale * .05 * cos(11. * trip.yzx + (u_time * .25));
-      trip.xyz += warpsScale * .025 * cos(17. * trip.yzx + (u_time * .25));
-    }
-
-    void main() {
-      vec2 uv = (gl_FragCoord.xy - u_resolution * .5) / u_resolution.yy + 0.5;
-      vec3 warpC = vec3(uv.x, uv.y, 1.);
-      coswarp(warpC, 3.);
-      float t = (u_time * .2) + warpC.r;
-
-      vec3 color = vec3(
-        smoothstep(sin(t), .00001, noise(uv * (3. + (warpC.r * 3.)))),
-        smoothstep(cos(t * .8), .00001, noise(uv * (3. + (warpC.g * 3.)))),
-        smoothstep(tan(t), .00001, noise(uv * (3. + (warpC.b * 3.))))
-      );
-      coswarp(color, 3.);
-
-      color = mix(color, vec3(0.1, 0.5, 0.55), 0.5);
-      gl_FragColor = vec4(color, 1.0);
-    }
-  </script>
-
-  <script>
-    let camera, scene, renderer, clock;
-    let uniforms;
-
-    function init() {
-      const container = document.getElementById("shader");
-
-      clock = new THREE.Clock();
-      camera = new THREE.Camera();
-      camera.position.z = 1;
-
-      scene = new THREE.Scene();
-      const geometry = new THREE.PlaneBufferGeometry(2, 2);
-
-      uniforms = {
-        u_time: { type: "f", value: 1.0 },
-        u_resolution: { type: "v2", value: new THREE.Vector2() },
-      };
-
-      const material = new THREE.ShaderMaterial({
-        uniforms,
-        vertexShader: document.getElementById("vertex").textContent,
-        fragmentShader: document.getElementById("fragment").textContent,
-      });
-
-      const mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
-
-      renderer = new THREE.WebGLRenderer();
-      renderer.setPixelRatio(window.devicePixelRatio);
-      container.appendChild(renderer.domElement);
-
-      onWindowResize();
-      window.addEventListener("resize", onWindowResize);
-    }
-
-    function onWindowResize() {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      uniforms.u_resolution.value.x = renderer.domElement.width;
-      uniforms.u_resolution.value.y = renderer.domElement.height;
-    }
-
-    function render() {
-      uniforms.u_time.value = clock.getElapsedTime();
-      renderer.render(scene, camera);
-    }
-
-    function animate() {
-      render();
-      requestAnimationFrame(animate);
-    }
-
-    init();
-    animate();
-  </script>
+  <!-- Your existing scripts remain the same -->
 </body>
 </html>
