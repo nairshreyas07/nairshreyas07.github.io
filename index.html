@@ -116,6 +116,260 @@
     <!-- Add more personal content here -->
   </div>
 </section>
+  <!-- Add this right after your About section -->
+<section id="projects">
+  <div class="projects-container">
+    <h2 class="section-title">Projects & Achievements</h2>
+    
+    <div class="projects-grid">
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div class="project-content">
+          <h3>Financial Analysis</h3>
+          <p>Conducted financial analysis of NSE 500 peers with strategic recommendations based on trends, ratios and ESG metrics.</p>
+          <div class="project-tags">
+            <span>Financial Accounting</span>
+            <span>ESG Metrics</span>
+            <span>NSE 500</span>
+          </div>
+          <div class="project-links">
+            <a href="#" aria-label="View Details"><i class="fas fa-chart-line"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Project 2 -->
+      <div class="project-card">
+        <div class="project-content">
+          <h3>Automobile Pricing Analysis</h3>
+          <p>Applied statistical methods to analyze car price factors using ANOVA and regression in the automobile industry.</p>
+          <div class="project-tags">
+            <span>Statistical Analysis</span>
+            <span>ANOVA</span>
+            <span>Regression</span>
+          </div>
+          <div class="project-links">
+            <a href="#" aria-label="View Details"><i class="fas fa-car"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Project 3 -->
+      <div class="project-card">
+        <div class="project-content">
+          <h3>Blockchain Healthcare Solution</h3>
+          <p>Developed secure, decentralized healthcare data solution using blockchain and federated learning at VIT.</p>
+          <div class="project-tags">
+            <span>Blockchain</span>
+            <span>Healthcare Tech</span>
+            <span>Federated Learning</span>
+          </div>
+          <div class="project-links">
+            <a href="#" aria-label="View Details"><i class="fas fa-lock"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Certification 1 -->
+      <div class="project-card">
+        <div class="project-content">
+          <h3>Finance Certifications</h3>
+          <p>Completed Bloomberg Finance Fundamentals, CFI's Accounting, Corporate Finance, Banking, and BI courses.</p>
+          <div class="project-tags">
+            <span>Financial Modeling</span>
+            <span>Bloomberg</span>
+            <span>CFI</span>
+          </div>
+          <div class="project-links">
+            <a href="#" aria-label="View Certificate"><i class="fas fa-certificate"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Certification 2 -->
+      <div class="project-card">
+        <div class="project-content">
+          <h3>Technical Certifications</h3>
+          <p>AWS Certified Cloud Practitioner, Google Analytics, Programming courses from Coursera.</p>
+          <div class="project-tags">
+            <span>AWS</span>
+            <span>Google Analytics</span>
+            <span>Python</span>
+          </div>
+          <div class="project-links">
+            <a href="#" aria-label="AWS Cert"><i class="fab fa-aws"></i></a>
+            <a href="#" aria-label="Google Cert"><i class="fab fa-google"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Leadership -->
+      <div class="project-card">
+        <div class="project-content">
+          <h3>Leadership Roles</h3>
+          <p>Junior Member at SRF and Mantavya, organized events, secured sponsorships, and managed teams at NMIMS.</p>
+          <div class="project-tags">
+            <span>Event Management</span>
+            <span>Sponsorships</span>
+            <span>Team Leadership</span>
+          </div>
+          <div class="project-links">
+            <a href="#" aria-label="View Details"><i class="fas fa-users"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Add this CSS to your existing style section -->
+<style>
+  /* Projects Section */
+  #projects {
+    position: relative;
+    min-height: 100vh;
+    background: rgba(10, 25, 47, 0.9);
+    padding: 100px 40px;
+    color: #d1e9e9;
+  }
+  
+  .projects-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    color: #f7c873;
+    text-align: center;
+    position: relative;
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background-color: #f7c873;
+  }
+  
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+  }
+  
+  .project-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 30px;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid rgba(247, 200, 115, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(247, 200, 115, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(247, 200, 115, 0.3);
+  }
+  
+  .project-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-content h3 {
+    color: #f7c873;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  .project-content p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 1rem;
+    flex: 1;
+  }
+  
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .project-tags span {
+    background: rgba(247, 200, 115, 0.15);
+    color: #f7c873;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
+  
+  .project-links {
+    display: flex;
+    gap: 15px;
+    margin-top: auto;
+  }
+  
+  .project-links a {
+    color: #d1e9e9;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .project-links a:hover {
+    color: #f7c873;
+    transform: translateY(-3px);
+    background: rgba(247, 200, 115, 0.2);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    #projects {
+      padding: 80px 20px;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+    
+    .project-card {
+      padding: 20px;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px) scale(1.01);
+    }
+  }
+</style>
+
+<!-- Add Font Awesome for icons (place in head section if not already there) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <!-- Add this CSS to your existing style tag (put it at the bottom of your current styles) -->
 <style>
