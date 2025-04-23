@@ -192,7 +192,7 @@
     function multipleBoxShadow(n) {
       let value = '';
       for(let i=0; i<n; i++) {
-        value += ${Math.random()*2000}px ${Math.random()*2000}px #FFF${i!==n-1?', ':''};
+        value += `${Math.random()*2000}px ${Math.random()*2000}px #FFF${i!==n-1?', ':''}`;
       }
       return value;
     }
