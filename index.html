@@ -149,7 +149,7 @@
 </section>
   <!-- Add this right after your About section -->
 <section id="projects">
-   <canvas id="projectCanvas"></canvas>
+  <canvas id="projectCanvas"></canvas>
   <div class="projects-container">
     <h2 class="section-title">Projects & Achievements</h2>
     
@@ -257,6 +257,7 @@
 
 <!-- Add this CSS to your existing style section -->
 <style>
+  /* Projects Section */
   #projects {
   position: relative;
   min-height: 100vh;
@@ -264,8 +265,7 @@
   color: #d1e9e9;
   overflow: hidden; /* Add this */
 }
-
-/* Canvas styling */
+  /* Canvas styling */
 #projectCanvas {
   position: absolute;
   top: 0;
@@ -273,28 +273,15 @@
   width: 100%;
   height: 100%;
   z-index: 0;
-  background: rgba(10, 25, 47, 0.3); /* Slightly transparent dark blue */
+  background-color: rgba(10, 25, 47, 0.1); /* Semi-transparent to blend */
 }
-
-.projects-container {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  /* Projects Section */
-  #projects {
-    position: relative;
-    min-height: 100vh;
-    background: rgba(10, 25, 47, 0.9);
-    padding: 100px 40px;
-    color: #d1e9e9;
-  }
   
   .projects-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+  position: relative;
+  z-index: 1; /* Ensure content stays above canvas */
+  max-width: 1200px;
+  margin: 0 auto;
+}
   
   .section-title {
     font-size: 2.5rem;
@@ -321,47 +308,21 @@
     gap: 30px;
   }
   
-   .project-card {
+  .project-card {
     background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(12px);
     border-radius: 15px;
     padding: 30px;
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border: 1px solid rgba(247, 200, 115, 0.15);
-    box-shadow: 
-      0 4px 20px rgba(0, 0, 0, 0.2),
-      0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-      0 0 20px rgba(247, 200, 115, 0.1) inset;
+    border: 1px solid rgba(247, 200, 115, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Glass reflection effect */
-  .project-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      to bottom right,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0) 60%
-    );
-    transform: rotate(30deg);
-    pointer-events: none;
   }
   
   .project-card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 
-      0 15px 30px rgba(247, 200, 115, 0.15),
-      0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-      0 0 30px rgba(247, 200, 115, 0.2) inset;
+    box-shadow: 0 15px 30px rgba(247, 200, 115, 0.15);
     background: rgba(255, 255, 255, 0.12);
     border-color: rgba(247, 200, 115, 0.3);
   }
@@ -437,22 +398,9 @@
     }
     
     .section-title {
-    font-size: 2.5rem;
-    margin-bottom: 60px;
-    color: #f7c873;
-    text-align: center;
-    position: relative;
-  }
-     .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 3px;
-    background-color: #f7c873;
-  }
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
     
     .project-card {
       padding: 20px;
@@ -691,13 +639,13 @@
   class ProjectShape {
     constructor(id) {
       this.id = id;
-      this.size = 2; // Smaller size for subtle effect
-      this.alpha = 0.6; // More transparent
+      this.size = 3;
+      this.alpha = 1;
       this.x = Math.floor(Math.random() * projectCanvas.width);
       this.y = Math.floor(Math.random() * projectCanvas.height);
       this.color = `rgba(${c1}, ${c2}, ${c3}, ${this.alpha})`;
       this.dir = Math.floor(Math.random() * 4);
-      this.speed = 0.8; // Slower speed
+      this.speed = 1;
     }
 
     walkLine() {
@@ -751,7 +699,7 @@
     }
   }
 
-   // Initialize with more subtle parameters
+  // Initialize project canvas variables
   const projectCanvas = document.getElementById('projectCanvas');
   const projectCtx = projectCanvas.getContext('2d');
   let projectShapes = [];
@@ -759,9 +707,8 @@
   let c2 = 205, c2S = 1;
   let c3 = 255, c3S = 1;
   let it = 0, totIt = 0;
-  const changeFreq = 150; // Less frequent direction changes
-  const population = 40; // Fewer particles
-
+  const changeFreq = 100;
+  const population = 30;
 
   function resizeProjectCanvas() {
     projectCanvas.width = projectCanvas.clientWidth;
@@ -771,12 +718,6 @@
   function animateProjects() {
     it++;
     totIt++;
-    projectCtx.globalCompositeOperation = 'source-over';
-    projectCtx.fillStyle = 'rgba(10, 25, 47, 0.05)';
-    projectCtx.fillRect(0, 0, projectCanvas.width, projectCanvas.height);
-
-    projectCtx.shadowColor = `rgba(${c1}, ${c2}, ${c3}, 0.5)`;
-    projectCtx.shadowBlur = 10;
 
     projectCtx.globalCompositeOperation = 'source-over';
     projectCtx.fillStyle = 'rgba(10, 25, 47, 0.1)';
