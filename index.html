@@ -665,17 +665,18 @@
    class ProjectShape {
     constructor(id) {
       this.id = id;
-      this.size = 3; // Slightly larger particles
-      this.alpha = 1; // Fully opaque
-      this.speed = 2; // Faster movement
+      this.size = 3;
+      this.speed = 2;
       this.x = Math.floor(Math.random() * projectCanvas.width);
       this.y = Math.floor(Math.random() * projectCanvas.height);
-      // Initialize with random color
       this.color = this.getRandomColor();
       this.dir = Math.floor(Math.random() * 4);
       this.colorChangeSpeed = Math.random() * 0.02 + 0.01;
       this.colorPhase = Math.random() * Math.PI * 2;
+      this.history = []; // Store previous positions for trails
+      this.maxTrailLength = 20; // How many trail segments to keep
     }
+
 
       getRandomColor() {
       const hue = Math.floor(Math.random() * 360);
@@ -689,6 +690,12 @@
     }
 
     walkLine() {
+      // Store current position in history
+      this.history.push({x: this.x, y: this.y, color: this.color});
+      if (this.history.length > this.maxTrailLength) {
+        this.history.shift();
+      }
+
       if (this.dir == 0) {
         this.x += this.speed;
         this.y += this.speed;
@@ -709,56 +716,63 @@
       this.x = this.mod(this.x, projectCanvas.width);
       this.y = this.mod(this.y, projectCanvas.height);
       this.updateColor();
-      this.draw();
+    }
+
+    draw() {
+      // Draw the trail first (behind the particle)
+      for (let i = 0; i < this.history.length; i++) {
+        const point = this.history[i];
+        const alpha = i / this.history.length; // Fade out older points
+        projectCtx.fillStyle = point.color.replace(')', `, ${alpha})`).replace('hsl', 'hsla');
+        projectCtx.fillRect(point.x, point.y, this.size, this.size);
+      }
+      
+      // Draw the current particle
+      projectCtx.fillStyle = this.color;
+      projectCtx.fillRect(this.x, this.y, this.size, this.size);
     }
 
     mod(n, m) {
       return ((n % m) + m) % m;
     }
 
-    draw() {
-      projectCtx.fillStyle = this.color;
-      projectCtx.fillRect(this.x, this.y, this.size, this.size);
-    }
-
     changeDir() {
       this.dir = Math.floor(Math.random() * 4);
     }
   }
-
   // Initialize project canvas variables
   const projectCanvas = document.getElementById('projectCanvas');
   const projectCtx = projectCanvas.getContext('2d');
   let projectShapes = [];
-  const population = 150; // Increased density
-  const changeFreq = 50; // More frequent direction changes
-
+  const population = 100; // Slightly reduced for performance with trails
+  const changeFreq = 50;
+    
   function resizeProjectCanvas() {
     const projectsSection = document.getElementById('projects');
     projectCanvas.width = projectsSection.clientWidth;
     projectCanvas.height = projectsSection.clientHeight;
     
-     // Reinitialize shapes when resizing
-    if (projectShapes.length > 0) {
-      projectShapes = [];
-      initShapes();
-    }
+    // Reinitialize shapes when resizing
+    projectShapes = [];
+    initShapes();
   }
 
-     function initShapes() {
+    function initShapes() {
     for (let i = 0; i < population; i++) {
       projectShapes[i] = new ProjectShape(i);
     }
   }
 
-   function animateProjects() {
-    // Clear with solid black background
-    projectCtx.fillStyle = '#000';
+    function animateProjects() {
+    // Instead of clearing completely, use a semi-transparent black rectangle
+    // to create fading trails
+    projectCtx.fillStyle = 'rgba(10, 25, 47, 0.1)';
     projectCtx.fillRect(0, 0, projectCanvas.width, projectCanvas.height);
 
     // Draw all shapes
     for (let i in projectShapes) {
       projectShapes[i].walkLine();
+      projectShapes[i].draw();
     }
 
     requestAnimationFrame(animateProjects);
@@ -789,7 +803,7 @@
     }
     animateProjects();
   }
-// Start the animation when DOM is loaded
+ // Start the animation when DOM is loaded
   document.addEventListener('DOMContentLoaded', function() {
     initProjectCanvas();
     window.addEventListener('resize', resizeProjectCanvas);
