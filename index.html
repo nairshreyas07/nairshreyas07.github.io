@@ -266,7 +266,6 @@
     overflow: hidden;
     background: rgba(10, 25, 47, 0.9); /* Keep your dark teal background */
   }
-}
   /* Canvas styling */
 #projectCanvas {
     position: absolute;
@@ -275,9 +274,10 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    opacity: 0.3; /* Make particles more subtle */
-    mix-blend-mode: screen; /* Better blending with background */
-  }
+    opacity: 0.3;
+    mix-blend-mode: screen;
+    display: block; /* Ensure it's displayed as block element */
+}
   
   .projects-container {
     position: relative;
@@ -739,9 +739,19 @@
   const population = 25;
 
   function resizeProjectCanvas() {
-    projectCanvas.width = projectCanvas.clientWidth;
-    projectCanvas.height = projectCanvas.clientHeight;
-  }
+    // Get the projects section dimensions
+    const projectsSection = document.getElementById('projects');
+    projectCanvas.width = projectsSection.clientWidth;
+    projectCanvas.height = projectsSection.clientHeight;
+    
+    // Reinitialize shapes when resizing
+    if (projectShapes.length > 0) {
+        for (let i = 0; i < projectShapes.length; i++) {
+            projectShapes[i].x = Math.floor(Math.random() * projectCanvas.width);
+            projectShapes[i].y = Math.floor(Math.random() * projectCanvas.height);
+        }
+    }
+}
 
   function animateProjects() {
     it++;
@@ -785,10 +795,15 @@
   }
 
   // Start the animation when DOM is loaded
-  document.addEventListener('DOMContentLoaded', function() {
-    initProjectCanvas();
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize after a slight delay to ensure DOM is fully loaded
+    setTimeout(() => {
+        resizeProjectCanvas();
+        initProjectCanvas();
+    }, 100);
+    
     window.addEventListener('resize', resizeProjectCanvas);
-  });
+});
 </script>
 </body>
 </html>
