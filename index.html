@@ -662,7 +662,7 @@
 </script>
   <script>
   // Projects Canvas Animation
-  class ProjectShape {
+   class ProjectShape {
     constructor(id) {
       this.id = id;
       this.size = 3; // Slightly larger particles
@@ -677,7 +677,7 @@
       this.colorPhase = Math.random() * Math.PI * 2;
     }
 
-    getRandomColor() {
+      getRandomColor() {
       const hue = Math.floor(Math.random() * 360);
       return `hsl(${hue}, 100%, 50%)`;
     }
@@ -726,52 +726,48 @@
     }
   }
 
-
   // Initialize project canvas variables
   const projectCanvas = document.getElementById('projectCanvas');
   const projectCtx = projectCanvas.getContext('2d');
   let projectShapes = [];
-  let c1 = 100, c1S = 1;
-  let c2 = 200, c2S = 1;
-  let c3 = 255, c3S = 1;
-  let it = 0, totIt = 0;
-  const changeFreq = 150;
-  const population = 50;
+  const population = 150; // Increased density
+  const changeFreq = 50; // More frequent direction changes
 
   function resizeProjectCanvas() {
     const projectsSection = document.getElementById('projects');
     projectCanvas.width = projectsSection.clientWidth;
     projectCanvas.height = projectsSection.clientHeight;
     
-    // Reinitialize shapes when resizing
+     // Reinitialize shapes when resizing
     if (projectShapes.length > 0) {
       projectShapes = [];
       initShapes();
     }
   }
 
-    function initShapes() {
+     function initShapes() {
     for (let i = 0; i < population; i++) {
       projectShapes[i] = new ProjectShape(i);
     }
   }
 
-  function animateProjects() {
-    it++;
-    totIt++;
-
-    projectCtx.globalCompositeOperation = 'source-over';
+   function animateProjects() {
+    // Clear with solid black background
     projectCtx.fillStyle = '#000';
     projectCtx.fillRect(0, 0, projectCanvas.width, projectCanvas.height);
 
-    projectCtx.shadowColor = `rgba(${c1}, ${c2}, ${c3}, 0.3)`;
-    projectCtx.shadowBlur = 10;
-
-     for (let i in projectShapes) {
+    // Draw all shapes
+    for (let i in projectShapes) {
       projectShapes[i].walkLine();
     }
 
     requestAnimationFrame(animateProjects);
+  }
+
+  function initProjectCanvas() {
+    resizeProjectCanvas();
+    initShapes();
+    animateProjects();
   }
 
  
@@ -793,15 +789,11 @@
     }
     animateProjects();
   }
-
-  // Start the animation when DOM is loaded
- document.addEventListener('DOMContentLoaded', function() {
+// Start the animation when DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
     initProjectCanvas();
     window.addEventListener('resize', resizeProjectCanvas);
   });
-    
-    window.addEventListener('resize', resizeProjectCanvas);
-});
 </script>
 </body>
 </html>
