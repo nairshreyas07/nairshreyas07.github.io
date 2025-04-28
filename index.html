@@ -254,9 +254,321 @@
     </div>
   </div>
 </section>
+  <!-- Add this right after your projects section -->
+<section id="contact">
+  <div class="rainbow-bg"></div>
+  <div class="contact-container">
+    <h2 class="section-title">Get In Touch</h2>
+    
+    <div class="card-container">
+      <!-- Business Card Front -->
+      <div class="card front">
+        <div class="blue"></div>
+        <div class="gold"></div>
+        <div class="pink"></div>
+        <div class="dots"></div>
+        <div class="personal-intro">
+          <p>Shreyas Nair</p>
+          <p>MBA Candidate | Strategist</p>
+        </div>
+      </div>
+      
+      <!-- Business Card Back -->
+      <div class="card back">
+        <div class="gold"></div>
+        <div class="top dots"></div>
+        <div class="personal-info">
+          <p>Shreyas Nair</p>
+          <p>MBA Candidate | Strategist</p>
+          <p>Email: nairshreyas07@gmail.com</p>
+          <p>LinkedIn: <a href="https://www.linkedin.com/in/shreyas-nair-791119300/" target="_blank">View Profile</a></p>
+          <p>Instagram: <a href="https://www.instagram.com/shreyas_077" target="_blank">@shreyas_077</a></p>
+          <p>NMIMS Mumbai '26</p>
+          <p>Gamer | Music Enthusiast</p>
+        </div>
+        <div class="bottom dots"></div>
+        <div class="pink"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- Add this CSS to your existing style section -->
 <style>
+  <style>
+  /* Contact Section */
+  #contact {
+    position: relative;
+    min-height: 100vh;
+    padding: 100px 40px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Rainbow 3D Background */
+  .rainbow-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      45deg,
+      #ff0000 0%, 
+      #ff8c00 14.28%, 
+      #ff0 28.56%, 
+      #008000 42.84%, 
+      #0000ff 57.12%, 
+      #4b0082 71.4%, 
+      #9400d3 85.68%
+    );
+    background-size: 400% 400%;
+    animation: rainbow 15s ease infinite;
+    opacity: 0.7;
+    transform: skewY(-5deg);
+    z-index: 0;
+  }
+  
+  @keyframes rainbow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+  }
+  
+  .contact-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    color: white;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+  
+  /* Business Card Styles */
+  .card-container {
+    perspective: 1000px;
+    margin: 40px 0;
+  }
+  
+  .card {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    display: grid;
+    font-family: 'Lato', sans-serif;
+    height: 200px;
+    width: 350px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    position: relative;
+    margin: 20px auto;
+  }
+  
+  .front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  
+  .back {
+    transform: rotateY(180deg);
+  }
+  
+  .card-container:hover .card {
+    transform: rotateY(180deg);
+  }
+  
+  /* Color Definitions */
+  :root {
+    --gold: #FFD700;
+    --pink: #FF69B4;
+    --blue: #4169E1;
+    --black: #000000;
+    --white: #FFFFFF;
+  }
+  
+  /* Front of card */
+  .front {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+  
+  .blue {
+    background-color: var(--blue);
+    grid-column: 8 / span 5;
+    grid-row: 1 / span 4;
+  }
+  
+  .gold {
+    background-color: var(--gold);
+    grid-column: 1 / span 7;
+    grid-row: 1 / span 4;
+  }
+  
+  .pink {
+    background-color: var(--pink);
+    clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+    grid-row: 1 / span 3;
+    grid-column: 1 / span 11;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .dots {
+    background:
+      radial-gradient(var(--pink) 20%, transparent 19%),
+      radial-gradient(var(--pink) 20%, transparent 19%),
+      transparent;
+    background-size: 6px 6px;
+    background-position: 0 0, 3px 3px;
+    grid-column: 1 / span 12;
+    grid-row: 3 / span 2;
+    margin: 0 0 15px 20px;
+    z-index: 1;
+  }
+  
+  .personal-intro {
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--gold);
+    display: flex;
+    flex-direction: column;
+    grid-column: 4 / span 6;
+    grid-row: 2 / span 2;
+    justify-content: center;
+    text-align: center;
+    z-index: 3;
+    backdrop-filter: blur(5px);
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid var(--gold);
+  }
+  
+  .personal-intro p {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  
+  .personal-intro p:first-of-type {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .personal-intro p:last-of-type {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  /* Back of card */
+  .back {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+  }
+  
+  .back .gold {
+    background-color: var(--gold);
+    grid-column: 1 / span 9;
+    grid-row: 1 / span 3;
+  }
+  
+  .back .top.dots {
+    background:
+      radial-gradient(var(--blue) 20%, transparent 19%),
+      radial-gradient(var(--blue) 20%, transparent 19%),
+      transparent;
+    background-size: 6px 6px;
+    background-position: 0 0, 3px 3px;
+    grid-column: 8 / span 6;
+    grid-row: 2 / span 3;
+  }
+  
+  .personal-info {
+    grid-column: 2 / span 6;
+    grid-row: 5 / span 6;
+    color: var(--black);
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+  }
+  
+  .personal-info p {
+    font-size: 12px;
+    margin: 5px 0;
+    color: var(--black);
+  }
+  
+  .personal-info p:first-of-type {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--black);
+  }
+  
+  .personal-info p:nth-of-type(2) {
+    font-size: 12px;
+    margin-bottom: 15px;
+    color: var(--black);
+  }
+  
+  .personal-info a {
+    color: var(--blue);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .personal-info a:hover {
+    color: var(--pink);
+  }
+  
+  .back .bottom.dots {
+    background:
+      radial-gradient(var(--blue) 20%, transparent 19%),
+      radial-gradient(var(--blue) 20%, transparent 19%),
+      transparent;
+    background-size: 6px 6px;
+    background-position: 0 0, 3px 3px;
+    grid-column: 1 / span 8;
+    grid-row: 11 / span 2;
+    z-index: 2;
+  }
+  
+  .back .pink {
+    background-color: var(--pink);
+    grid-column: 8 / span 5;
+    grid-row: 10 / span 3;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    #contact {
+      padding: 80px 20px;
+    }
+    
+    .card {
+      width: 300px;
+      height: 180px;
+    }
+    
+    .personal-intro p:first-of-type {
+      font-size: 16px;
+    }
+    
+    .personal-intro p:last-of-type {
+      font-size: 10px;
+    }
+  }
+</style>
   /* Projects Section */
   #projects {
     position: relative;
