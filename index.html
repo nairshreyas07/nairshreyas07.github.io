@@ -256,6 +256,9 @@
 </section>
   <!-- Add this right before closing </body> -->
 <section id="contact">
+  <canvas id="particleCanvas" class="particle-background"></canvas>
+  <div class="golden-nebula"></div>
+  <div class="contact-container">
   <div class="holographic-grid" id="holographicGrid"></div>
   <div class="contact-container">
     <h2 class="section-title">Let's Create <span>Together</span></h2>
@@ -331,6 +334,42 @@
 
 <!-- Add this CSS to your existing style section -->
 <style>
+  /* Particle Canvas Background */
+  .particle-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  /* Golden Nebula Effect */
+  .golden-nebula {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(247, 200, 115, 0.15) 0%, transparent 25%),
+      radial-gradient(circle at 80% 70%, rgba(247, 200, 115, 0.15) 0%, transparent 25%);
+    animation: nebulaPulse 12s infinite alternate;
+    z-index: 2;
+  }
+  
+  @keyframes nebulaPulse {
+    0% { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+  
+  .contact-container {
+    position: relative;
+    z-index: 3;
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+  }
   /* Contact Section - Holographic Luxury */
   #contact {
     position: relative;
@@ -338,7 +377,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #0a0c17;
+    background: radial-gradient(ellipse at bottom, #0a0a12 0%, #000000 100%);
     padding: 80px 20px;
     overflow: hidden;
   }
@@ -1338,6 +1377,133 @@
         this.style.boxShadow = '0 5px 15px rgba(247, 200, 115, 0.3)';
       });
     });
+  });
+</script>
+  <script>
+  // Cosmic Particle System
+  document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const particleCount = window.innerWidth < 768 ? 100 : 200;
+    
+    // Set canvas size
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    
+    // Particle class
+    class Particle {
+      constructor() {
+        this.reset();
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+      }
+      
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -100;
+        this.speed = Math.random() * 2 + 1;
+        this.size = Math.random() * 3 + 1;
+        this.opacity = Math.random() * 0.6 + 0.1;
+        this.color = `rgba(247, 200, 115, ${this.opacity})`;
+      }
+      
+      update() {
+        this.y += this.speed;
+        if (this.y > canvas.height + 10) {
+          this.reset();
+        }
+        
+        // Create golden sparkle effect occasionally
+        if (Math.random() > 0.98) {
+          this.sparkle = 10;
+        }
+        
+        if (this.sparkle > 0) {
+          this.sparkle--;
+          this.color = `rgba(255, 255, 255, ${this.opacity})`;
+        } else {
+          this.color = `rgba(247, 200, 115, ${this.opacity})`;
+        }
+      }
+      
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        
+        // Add glow to sparkling particles
+        if (this.sparkle > 0) {
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = 'rgba(247, 200, 115, 0.8)';
+        }
+      }
+    }
+    
+    // Initialize particles
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+    
+    // Animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw connection lines between close particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 150) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(247, 200, 115, ${0.3 - distance/500})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      
+      // Update and draw particles
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      
+      requestAnimationFrame(animate);
+    }
+    
+    // Handle resize
+    window.addEventListener('resize', function() {
+      resizeCanvas();
+      initParticles();
+    });
+    
+    // Initialize
+    resizeCanvas();
+    initParticles();
+    animate();
+    
+    // Dynamic nebula interaction
+    const nebula = document.querySelector('.golden-nebula');
+    document.addEventListener('mousemove', function(e) {
+      const x = e.clientX / window.innerWidth * 100;
+      const y = e.clientY / window.innerHeight * 100;
+      nebula.style.background = 
+        `radial-gradient(circle at ${x}% ${y}%, rgba(247, 200, 115, 0.2) 0%, transparent 25%),
+         radial-gradient(circle at ${100 - x}% ${100 - y}%, rgba(247, 200, 115, 0.2) 0%, transparent 25%)`;
+    });
+    
+    // Rest of your existing card interaction JS remains unchanged
   });
 </script>
 </body>
