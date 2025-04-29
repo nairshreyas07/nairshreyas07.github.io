@@ -254,9 +254,318 @@
     </div>
   </div>
 </section>
+  <!-- Add this right before your closing </body> tag -->
+<section id="contact">
+  <div class="contact-bg"></div>
+  <div class="contact-container">
+    <h2 class="section-title">Let's Connect</h2>
+    
+    <div class="contact-card">
+      <div class="card-inner">
+        <!-- Card Front -->
+        <div class="card-front">
+          <div class="gold-bar"></div>
+          <div class="profile-circle">
+            <img src="ShreyasProfile.png" alt="Shreyas Nair">
+          </div>
+          <h3>Shreyas Nair</h3>
+          <p class="title">MBA Candidate | NMIMS Mumbai</p>
+          <div class="gold-divider"></div>
+          <div class="contact-prompt">
+            <p>Hover to view contact details</p>
+            <i class="fas fa-arrow-right gold-arrow"></i>
+          </div>
+        </div>
+        
+        <!-- Card Back -->
+        <div class="card-back">
+          <div class="gold-bar"></div>
+          <h3>Contact Me</h3>
+          <div class="contact-details">
+            <div class="contact-item">
+              <i class="fas fa-envelope gold-icon"></i>
+              <a href="mailto:nairshreyas07@gmail.com">nairshreyas07@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <i class="fab fa-linkedin-in gold-icon"></i>
+              <a href="https://www.linkedin.com/in/shreyas-nair-791119300/" target="_blank">linkedin.com/in/shreyas-nair</a>
+            </div>
+            <div class="contact-item">
+              <i class="fab fa-instagram gold-icon"></i>
+              <a href="https://www.instagram.com/shreyas_077" target="_blank">@shreyas_077</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-university gold-icon"></i>
+              <span>NMIMS Mumbai '26</span>
+            </div>
+          </div>
+          <div class="gold-divider"></div>
+          <div class="social-links">
+            <a href="mailto:nairshreyas07@gmail.com" class="social-icon">
+              <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/shreyas-nair-791119300/" target="_blank" class="social-icon">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://www.instagram.com/shreyas_077" target="_blank" class="social-icon">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
   
 <!-- Add this CSS to your existing style section -->
 <style>
+  /* Contact Section Styles */
+  #contact {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0a0a0a;
+    padding: 80px 20px;
+    overflow: hidden;
+  }
+  
+  .contact-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(247, 200, 115, 0.1) 0%, transparent 30%),
+      radial-gradient(circle at 80% 70%, rgba(247, 200, 115, 0.1) 0%, transparent 30%),
+      linear-gradient(to bottom, rgba(10, 10, 10, 1), rgba(20, 20, 20, 1));
+    z-index: 0;
+  }
+  
+  .contact-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    color: #f7c873;
+    text-shadow: 0 0 15px rgba(247, 200, 115, 0.3);
+    position: relative;
+    display: inline-block;
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #f7c873, transparent);
+  }
+  
+  /* Contact Card Styles */
+  .contact-card {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+  
+  .contact-card:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: rgba(20, 20, 20, 0.95);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(247, 200, 115, 0.2);
+  }
+  
+  .card-back {
+    transform: rotateY(180deg);
+    padding: 30px;
+  }
+  
+  .gold-bar {
+    height: 8px;
+    width: 100%;
+    background: linear-gradient(90deg, #f7c873, #ffdf91, #f7c873);
+    margin-bottom: 30px;
+  }
+  
+  .profile-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 25px;
+    border: 3px solid #f7c873;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(247, 200, 115, 0.3);
+  }
+  
+  .profile-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .card-front h3, .card-back h3 {
+    color: #f7c873;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  
+  .card-front .title {
+    color: #d1e9e9;
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-bottom: 30px;
+  }
+  
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f7c873, transparent);
+    margin: 30px auto;
+    width: 70%;
+  }
+  
+  .contact-prompt {
+    color: #d1e9e9;
+    margin-top: 50px;
+  }
+  
+  .contact-prompt p {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .gold-arrow {
+    color: #f7c873;
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(0); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(5px); }
+  }
+  
+  /* Back of Card Styles */
+  .contact-details {
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .gold-icon {
+    color: #f7c873;
+    font-size: 1.2rem;
+    min-width: 30px;
+  }
+  
+  .contact-item a, .contact-item span {
+    color: #d1e9e9;
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin-left: 15px;
+    transition: color 0.3s;
+  }
+  
+  .contact-item a:hover {
+    color: #f7c873;
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .social-icon {
+    color: #d1e9e9;
+    font-size: 1.3rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+  }
+  
+  .social-icon:hover {
+    color: #f7c873;
+    background: rgba(247, 200, 115, 0.2);
+    transform: translateY(-3px);
+  }
+  
+  /* Floating Gold Particles */
+  .gold-particle {
+    position: absolute;
+    background-color: #f7c873;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float linear infinite;
+    z-index: 1;
+  }
+  
+  @keyframes float {
+    to {
+      transform: translateY(-100vh);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+    
+    .card-inner {
+      height: 450px;
+    }
+    
+    .profile-circle {
+      width: 100px;
+      height: 100px;
+    }
+    
+    .contact-item a, .contact-item span {
+      font-size: 0.85rem;
+    }
+  }
   /* Projects Section */
   #projects {
     position: relative;
@@ -807,6 +1116,34 @@
   document.addEventListener('DOMContentLoaded', function() {
     initProjectCanvas();
     window.addEventListener('resize', resizeProjectCanvas);
+  });
+</script>
+  <script>
+  // Create floating gold particles
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactSection = document.querySelector('#contact');
+    
+    for (let i = 0; i < 20; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('gold-particle');
+      
+      // Random properties
+      const size = Math.random() * 5 + 1;
+      const posX = Math.random() * 100;
+      const duration = Math.random() * 20 + 10;
+      const delay = Math.random() * -20;
+      const opacity = Math.random() * 0.4 + 0.2;
+      
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${posX}%`;
+      particle.style.bottom = `-${size}px`;
+      particle.style.animationDuration = `${duration}s`;
+      particle.style.animationDelay = `${delay}s`;
+      particle.style.opacity = opacity;
+      
+      contactSection.appendChild(particle);
+    }
   });
 </script>
 </body>
